@@ -1,9 +1,7 @@
-import abc
+from abc import ABC, abstractmethod
 
 
-class ConnectionAbstract(abc.ABC):
-    def connect(self) -> bool:
-        raise NotImplementedError
-
-    def disconnect(self) -> bool:
+class ConnectionAbstract(ABC):
+    @abstractmethod
+    def get_connection(self) -> bool:
         raise NotImplementedError

@@ -7,15 +7,10 @@ class ConnectionSQLite(ConnectionAbstract):
 
     def __init__(self, config: ConfigurationAbstract, section: str):
         self.db_url = config().get(section, "path")
-        self.sqlite_connection = None
 
-    def connect(self) -> bool:
+    def get_connection(self) -> ConnectionAbstract:
         try:
-            self.sqlite_connection = sqlite3.connect(self.db_url)
-            return True
+            return sqlite3.connect(self.db_url)
         except Exception as e:
-            print(e)
-            return False
+            raise e
 
-    def disconnect(self) -> bool:
-        pass

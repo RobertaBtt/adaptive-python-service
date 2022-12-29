@@ -9,5 +9,3 @@ class ConfigurationAbstract(ABC):
     @abstractmethod
     def load(self) -> None:
         raise NotImplementedError
-
-
