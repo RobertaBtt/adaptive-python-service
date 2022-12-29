@@ -1,7 +1,6 @@
 import os
 from app.configuration.ConfigurationAbstract import ConfigurationAbstract
 from configparser import ConfigParser, NoSectionError, NoOptionError
-from dependency_injector import providers
 
 
 class ConfigurationCONF(ConfigurationAbstract):
