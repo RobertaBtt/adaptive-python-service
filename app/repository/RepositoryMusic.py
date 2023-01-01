@@ -5,7 +5,7 @@ from app.connection.ConnectionAbstract import ConnectionAbstract
 class RepositoryMusic(RepositoryAbstract):
 
     def __init__(self, connection: ConnectionAbstract):
-        self.sql= connection
+        self.sql = connection
 
     def create(self):
         pass
