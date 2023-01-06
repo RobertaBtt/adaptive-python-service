@@ -4,7 +4,7 @@ from app.DependencyContainer import DependencyContainer
 
 app = DependencyContainer()
 
-app_name = app.config().get('APP', 'name')
+app_name = app.config_conf().get('APP', 'name')
 
 artist_id = 90
 album_id = 162
