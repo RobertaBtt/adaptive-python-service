@@ -12,6 +12,10 @@ class RepositoryAbstract(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def read_with_headers(self, query: str):
+        raise NotImplementedError
+
+    @abstractmethod
     def update(self):
         raise NotImplementedError
 

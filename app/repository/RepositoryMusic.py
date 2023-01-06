@@ -10,6 +10,15 @@ class RepositoryMusic(RepositoryAbstract):
     def create(self):
         pass
 
+    def read_with_headers(self, query: str):
+        with self.sql.get_connection() as connection:
+            cursor = connection.cursor()
+            result = cursor.execute(query).fetchall()
+            headers = list(map(lambda attr: attr[0], cursor.description))
+            results = [{header: row[i] for i, header in enumerate(headers)} for row in result]
+
+        return results
+
     def read(self, query: str):
         with self.sql.get_connection() as connection:
             cursor = connection.cursor()
