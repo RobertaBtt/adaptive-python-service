@@ -4,17 +4,27 @@
 
 Use this template everytime you want to quick set up a Python service.
 
-This template is able to read from a SQLite, for the moment, 
-and to read a configuration file.
+This template is able to 
+- connect to different Database (inheriting from ConnectionAbstract) 
+for now is implemented the connection to a **SQLite** Database
 
-From the main.py endpoint it is possible to call the services.
+- This service is also prepared to read as an input different file format, 
+for now it is implemented only the **JSON** format.
 
-The service are available into the file services.py
+- This service is able to read from file of type **.conf** and from files of type **.env**
+
+- This service has two endpoints:
+    - **main.py**
+    - **web.py**
+
+From both of these endpoints is possible to call the different services that
+has been injected in the Container.
+
+------------------
 
 This projects follows the **Repository Pattern**.
 
-It is an abstraction over persistent storage.
-Hides the details of data access.
+It is an abstraction over persistent storage. It hides the details of data access.
 
 
 In the dependency inversion the domain model is free from the Infrastructure concerns.
@@ -67,3 +77,8 @@ Each layer is independent of the others._
 **Run main**
 
 `python3 main.py`
+
+
+**Run Flask Web**
+
+`python3 web.py`
