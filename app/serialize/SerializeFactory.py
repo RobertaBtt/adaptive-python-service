@@ -10,14 +10,14 @@ from . import SerializeXML
 # can adapt to different data sources or services (XML, JSON, YAML, CSV ecc)
 
 
-SERVICE_ADAPTERS = dict()
+SERIALIZERS_DICT = dict()
 
 
 def register():
     """Register a Service Class that can adapt to different data sources"""
-    SERVICE_ADAPTERS["JSON"] = SerializeJSON.SerializeJSON
-    SERVICE_ADAPTERS["XML"] = SerializeXML.SerializeXML
-    SERVICE_ADAPTERS["YAML"] = SerializeYAML.SerializeYAML
+    SERIALIZERS_DICT["JSON"] = SerializeJSON.SerializeJSON
+    SERIALIZERS_DICT["XML"] = SerializeXML.SerializeXML
+    SERIALIZERS_DICT["YAML"] = SerializeYAML.SerializeYAML
 
 
 class SerializeFactory:
@@ -25,5 +25,5 @@ class SerializeFactory:
     def __init__(self):
         register()
 
-    def get_service(self, service_type):
-        return SERVICE_ADAPTERS[service_type]
+    def get_serializer(self, service_type):
+        return SERIALIZERS_DICT[service_type]

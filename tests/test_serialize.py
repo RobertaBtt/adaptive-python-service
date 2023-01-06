@@ -16,8 +16,15 @@ class TestSerialize(unittest.TestCase):
     def test_instance_serializer(self):
         current_format = self.config.get("INPUT_FORMAT")
         serializer = self.app.serialize_factory()
-        self.assertEqual(SerializeJSON, serializer.get_service(current_format))
-        self.assertEqual(type(serializer.get_service(current_format)()), type(SerializeJSON()))
+        self.assertEqual(SerializeJSON, serializer.get_serializer(current_format))
+        self.assertEqual(type(serializer.get_serializer(current_format)()), type(SerializeJSON()))
+
+    def test_serialize_json(self):
+        current_format = self.config.get("INPUT_FORMAT")
+        serializer = self.app.serialize_factory()
+
+        self.assertEqual(SerializeJSON, serializer.get_serializer(current_format))
+        self.assertEqual(type(serializer.get_serializer(current_format)()), type(SerializeJSON()))
 
 
 if __name__ == '__main__':
