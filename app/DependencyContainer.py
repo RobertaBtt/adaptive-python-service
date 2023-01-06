@@ -13,3 +13,4 @@ class DependencyContainer(DeclarativeContainer):
     music_repository = Singleton(RepositoryMusic, connection)
     service = Singleton(ServiceMusic, config, music_repository)
 
+
