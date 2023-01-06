@@ -3,7 +3,7 @@ from app.DependencyContainer import DependencyContainer
 
 app = DependencyContainer()
 
-app_name = app.config().get('APP', 'name')
+app_name = app.config_conf().get('APP', 'name')
 
 
 flask_app = Flask(__name__)

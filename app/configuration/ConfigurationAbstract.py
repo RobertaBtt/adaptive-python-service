@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class ConfigurationAbstract(ABC):
     @abstractmethod
-    def get(self, section: str, key: str):
+    def get(self, key: str, section: str = None):
         raise NotImplementedError
 
     @abstractmethod

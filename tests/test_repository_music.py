@@ -8,7 +8,7 @@ class TestRepositorySqlite(unittest.TestCase):
     def setUp(self):
         super().setUp()
         self.app = DependencyContainer()
-        self.config = self.app.config()  # ConfigurationCONF
+        self.config = self.app.config_conf()  # ConfigurationCONF
         self.sql_connection = ConnectionSQLite(self.config, "CONNECTION_SQLITE_TEST")
         self.music_repository = RepositoryMusic(self.sql_connection)
 
