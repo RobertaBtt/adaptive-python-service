@@ -14,12 +14,21 @@ def landing():
     return app_name
 
 
-@flask_app.route('/webhook', methods=['POST'])
-def webhook():
-    if request.method == 'POST':
-        print("Data received from Webhook is: ", request.json)
+@flask_app.route('/webhook/<url>', methods=['POST'])
+def webhook(url):
 
-        return "Webhook received!"
+    if request.method == 'POST':
+
+        data = request.data.decode()
+        header_hmac = request.headers.get('Hmac-SHA256')
+
+        try:
+            app.service_security().verify_webhook(url, data, header_hmac)
+            return "Url and signature are valid"
+        except Exception as ex:
+            return "error: " + str(ex)
+
+
 
 
 flask_app.run(

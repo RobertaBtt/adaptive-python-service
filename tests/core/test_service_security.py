@@ -1,8 +1,6 @@
 import unittest
-from app.connection.ConnectionSQLite import ConnectionSQLite
 from app.DependencyContainer import DependencyContainer
-from app.repository.RepositoryMusic import RepositoryMusic
-from app.service.ServiceSecurity import ServiceSecurity
+
 
 class TestServiceSecurity(unittest.TestCase):
     def setUp(self):
@@ -10,21 +8,23 @@ class TestServiceSecurity(unittest.TestCase):
         self.app = DependencyContainer()
         self.service_security = self.app.service_security()
 
+        self.correct_hmac = '9oJnkH8gr3l7UXYlGf3XYEyXKvpf6z0F6w1fJ4aYh5c='
+
         self.payload = '''
+{
+      "event": "SERVER_UPDATE",
+      "updates": [
         {
-              "event": "SERVER_UPDATE",
-              "updates": [
-                {
-                  "item": "gadgets",
-                  "action": "add",
-                  "quantity": 20
-                },
-                {
-                  "item": "widgets",
-                  "action": "remove",
-                  "quantity": 10
-                }
-              ]
+          "item": "gadgets",
+          "action": "add",
+          "quantity": 20
+        },
+        {
+          "item": "widgets",
+          "action": "remove",
+          "quantity": 10
+        }
+      ]
 }'''
 
     def test_url_webhook_is_registered(self):
@@ -37,12 +37,12 @@ class TestServiceSecurity(unittest.TestCase):
 
     def test_webhook_signature_is_valid(self):
         url_webhook_registered = 'djsnckvj'
-        header_hmac = '7wrb5ObQ8Usa1fOYjsK46VmFhtAz+nHtuvU9sP9XClA='
+        header_hmac = self.correct_hmac
         self.assertTrue(self.service_security.verify_webhook(url_webhook_registered, self.payload, header_hmac))
 
     def test_webhook_signature_url_not_found_exception(self):
         url_webhook_registered = 'fake_url'
-        header_hmac = '7wrb5ObQ8Usa1fOYjsK46VmFhtAz+nHtuvU9sP9XClA=_another_string_added'
+        header_hmac = self.correct_hmac + "_another_string_added"
 
         with self.assertRaises(Exception) as context:
             self.service_security.verify_webhook(url_webhook_registered, self.payload, header_hmac)
@@ -50,7 +50,7 @@ class TestServiceSecurity(unittest.TestCase):
 
     def test_webhook_signature_is_not_valid_exception(self):
         url_webhook_registered = 'djsnckvj'
-        header_hmac = '7wrb5ObQ8Usa1fOYjsK46VmFhtAz+nHtuvU9sP9XClA=_another_string_added'
+        header_hmac = self.correct_hmac + "_another_string_added"
 
         with self.assertRaises(Exception) as context:
             self.service_security.verify_webhook(url_webhook_registered, self.payload, header_hmac)

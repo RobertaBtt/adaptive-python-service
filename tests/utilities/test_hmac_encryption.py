@@ -11,20 +11,20 @@ class TestHMACEncryption(unittest.TestCase):
         self.digest_mode = hashlib.sha256
 
         self.payload = '''
+{
+      "event": "SERVER_UPDATE",
+      "updates": [
         {
-              "event": "SERVER_UPDATE",
-              "updates": [
-                {
-                  "item": "gadgets",
-                  "action": "add",
-                  "quantity": 20
-                },
-                {
-                  "item": "widgets",
-                  "action": "remove",
-                  "quantity": 10
-                }
-              ]
+          "item": "gadgets",
+          "action": "add",
+          "quantity": 20
+        },
+        {
+          "item": "widgets",
+          "action": "remove",
+          "quantity": 10
+        }
+      ]
 }'''
 
     def test_hmac_encryption(self):
@@ -39,8 +39,25 @@ class TestHMACEncryption(unittest.TestCase):
         hmac_digest = hmac_result.digest()
 
         computed_mac = base64.b64encode(hmac_digest)
-        expected_result = '7wrb5ObQ8Usa1fOYjsK46VmFhtAz+nHtuvU9sP9XClA='.encode('utf-8')
-        # print(computed_mac)  # 7wrb5ObQ8Usa1fOYjsK46VmFhtAz+nHtuvU9sP9XClA=
+        expected_result = '9oJnkH8gr3l7UXYlGf3XYEyXKvpf6z0F6w1fJ4aYh5c='.encode('utf-8')
+        #print(computed_mac)  # 9oJnkH8gr3l7UXYlGf3XYEyXKvpf6z0F6w1fJ4aYh5c=
+        result = hmac.compare_digest(computed_mac, expected_result)
+        self.assertEqual(computed_mac, expected_result)
+        self.assertTrue(result)
+
+    def test_hmac_simple(self):
+        simple_payload = '{"event": "SERVER_UPDATE"}'
+
+        hmac_result = hmac.new(
+            self.API_SECRET_KEY.encode('utf-8'),
+            simple_payload.encode('utf-8'),
+            digestmod=hashlib.sha256)
+
+        hmac_digest = hmac_result.digest()
+
+        computed_mac = base64.b64encode(hmac_digest)
+        expected_result = 'SgS9OYxlwwM75ttkEJSrMJvVpoXTLrHkWQAJrgFx7LY='.encode('utf-8')
+
         result = hmac.compare_digest(computed_mac, expected_result)
         self.assertEqual(computed_mac, expected_result)
         self.assertTrue(result)
