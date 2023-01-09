@@ -14,7 +14,7 @@ class ConfigurationENV(ConfigurationAbstract):
     def load(self) -> None:
         self.config = load_dotenv(dotenv_path=self.path)
 
-    def get(self, key: str, option: str = None):
+    def get(self, key: str, section: str = None):
         if self.config is None:
             self.load()
         return os.environ.get(key)

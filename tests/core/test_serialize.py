@@ -5,7 +5,7 @@ from pathlib import Path
 from app.DependencyContainer import DependencyContainer
 from app.serialize.SerializeJSON import SerializeJSON
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 class TestSerialize(unittest.TestCase):
@@ -28,7 +28,7 @@ class TestSerialize(unittest.TestCase):
         current_format = self.config.get("INPUT_FORMAT")
         serializer = self.app.serialize_factory().get_serializer(current_format)
 
-        json_file = os.path.join(str(BASE_DIR) + '/test_json.json')
+        json_file = os.path.join(str(BASE_DIR) + '/storage/test_json.json')
         result = serializer.deserialize_file(json_file)
 
         self.assertEqual(result['job_id'], '236365')

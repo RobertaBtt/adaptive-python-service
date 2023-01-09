@@ -6,7 +6,7 @@ class TestConfigurationENV(unittest.TestCase):
     def setUp(self):
         super().setUp()
         self.app = DependencyContainer()
-        self.config = self.app.config_env()  # ConfigurationCONF
+        self.config = self.app.config_env()  # ConfigurationENV
 
     def test_get_configuration_ENV(self):
         app_name = self.config.get("APP_NAME")
