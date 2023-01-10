@@ -82,3 +82,14 @@ Each layer is independent of the others._
 **Run Flask Web**
 
 `python3 web.py`
+
+## Test the endpoint locally:
+
+`curl -X POST http://127.0.0.1:8080/webhook/djsnckvj --header 'Content-Type: application/json' --header 'Hmac-SHA256: SgS9OYxlwwM75ttkEJSrMJvVpoXTLrHkWQAJrgFx7LY='  --data '{"event": "SERVER_UPDATE"}'
+`
+
+With **Postman**:
+
+![postman-body.jpg](static%2Fpostman-body.jpg)
+
+![postman-header.jpg](static%2Fpostman-header.jpg)
