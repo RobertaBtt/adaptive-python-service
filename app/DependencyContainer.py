@@ -28,7 +28,7 @@ class DependencyContainer(DeclarativeContainer):
     service_music = Singleton(ServiceMusic, config_conf, music_repository)
 
     # Backend services
-    service_security = Singleton(ServiceSecurity)
+    service_security = Singleton(ServiceSecurity, log_local)
 
 
 

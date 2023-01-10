@@ -1,13 +1,15 @@
 import hmac
 import hashlib
 import base64
-
+from app.log.LogAbstract import LogAbstract
 
 class ServiceSecurity:
 
-    def __init__(self):
+    def __init__(self, logger: LogAbstract):
 
-        # Client knows wich are the registered API secrets
+        self.logger = logger
+
+        # Client knows which are the registered API secrets
         self.dictionary_urls_APIS = {
             'djsnckvj': 'API_SECRET_CLIENT1',
             'wpeori': 'API_SECRET_CLIENT2',
@@ -15,15 +17,20 @@ class ServiceSecurity:
         }
 
     def verify_webhook(self, url: str, payload: str, header_hmac: str):
+
         url_api_key = self.verify_url_api_key(url)
 
         if url_api_key is not None:
             if self.verify_hmac_signature(url_api_key, payload, header_hmac):
                 return True
             else:
-                raise Exception("Webhook Signature is not valid")
+                error = "Webhook Signature is not valid"
+                self.logger.error(f'{error}')
+                raise Exception(error)
         else:
-            raise Exception("Webhook Url not found")
+            error = "Webhook Url not found"
+            self.logger.error(f'{error}')
+            raise Exception(error)
 
     # Is this URL and api webhook registered in our systems ?
     # If yes, return the correspondent API SECRET KEY
